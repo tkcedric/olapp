@@ -1,0 +1,38 @@
+.progress-tracker {
+  background-color: #f8f9fa;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  max-width: 600px;
+  text-align: left;
+}
+
+.progress-tracker h3 {
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.progress-tracker p {
+  margin: 5px 0;
+}
+
+.mark-complete-btn {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.mark-complete-btn:hover {
+  background-color: #218838;
+}
+
+.progress-error,
+.progress-loading {
+  text-align: center;
+  color: #dc3545;
+  font-size: 1.2rem;
+}
