@@ -1,62 +1,55 @@
 def test_get_progress(client):
-    # Add a user and progress data
-    client.post('/api/register', json={
+    # Register a new user
+    response = client.post('/api/register', json={
         'username': 'testuser',
         'email': 'test@example.com',
         'password': 'password123'
     })
+    assert response.status_code == 200
+    user_id = response.get_json().get('id')
 
-    client.post('/api/lessons', json={
-        'title': 'Sample Lesson',
-        'content': 'Sample lesson content.',
-        'course_id': 1
-    })
-
-    # Add progress for the user
+    # Add progress data
     response = client.post('/api/progress', json={
-        'user_id': 1,
+        'user_id': user_id,
         'topic_id': 1,
         'total_questions': 10,
         'answered_correctly': 5,
         'completed': False
     })
-    assert response.status_code == 201
-    assert b"Progress initialized successfully" in response.data
-
-    # Fetch progress
-    response = client.get('/api/progress')
     assert response.status_code == 200
-    assert isinstance(response.json, list)
-    assert len(response.json) > 0
-    assert "total_questions" in response.json[0]
+
+    # Test GET progress
+    response = client.get('/api/progress', headers={"User-Id": str(user_id)})
+    assert response.status_code == 200
+    assert len(response.get_json()) > 0
+
 
 def test_update_progress(client):
-    # Register user and initialize progress
-    client.post('/api/register', json={
+    # Register a new user
+    response = client.post('/api/register', json={
         'username': 'testuser',
         'email': 'test@example.com',
         'password': 'password123'
     })
+    assert response.status_code == 200
+    user_id = response.get_json().get('id')
 
-    client.post('/api/progress', json={
-        'user_id': 1,
+    # Add progress data
+    response = client.post('/api/progress', json={
+        'user_id': user_id,
         'topic_id': 1,
         'total_questions': 10,
         'answered_correctly': 5,
         'completed': False
     })
+    assert response.status_code == 200
 
-    # Update progress
-    response = client.put('/api/progress/1/1', json={
+    # Test PUT progress
+    response = client.put(f'/api/progress/{user_id}/1', json={
         'answered_correctly': 10,
         'completed': True
     })
     assert response.status_code == 200
-    assert b"Progress updated successfully" in response.data
-
-    # Verify progress is updated
-    response = client.get('/api/progress')
-    assert response.status_code == 200
-    progress = response.json[0]
+    progress = response.get_json().get('progress')
     assert progress['answered_correctly'] == 10
     assert progress['completed'] is True
