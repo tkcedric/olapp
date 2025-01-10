@@ -27,16 +27,8 @@ def get_all_user_progress():
     ]), 200
 
 # Initialize progress for a specific user and topic
-@progress_routes.route('/progress', methods=['POST'])
-def initialize_progress():
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "No input data provided"}), 400
-    user_id = data.get('user_id')
-    topic_id = data.get('topic_id')
-    if not user_id or not topic_id:
-        return jsonify({"error": "user_id and topic_id are required"}), 400
-    
+@progress_routes.route('/progress/<int:user_id>/<int:topic_id>', methods=['POST'])
+def initialize_progress(user_id, topic_id):
     # Check if progress already exists
     progress = Progress.query.filter_by(user_id=user_id, topic_id=topic_id).first()
     if not progress:
@@ -44,9 +36,9 @@ def initialize_progress():
         progress = Progress(
             user_id=user_id,
             topic_id=topic_id,
-            total_questions=data.get('total_questions', 10),  # Replace with dynamic question count if needed
-            answered_correctly=data.get('answered_correctly', 0),
-            completed=data.get('completed', False)
+            total_questions=10,  # Replace with dynamic question count if needed
+            answered_correctly=0,
+            completed=False
         )
         db.session.add(progress)
         db.session.commit()

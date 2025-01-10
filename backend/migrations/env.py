@@ -1,5 +1,6 @@
 import logging
 from logging.config import fileConfig
+from app.models import User, CourseProgress  # Add all models
 
 from flask import current_app
 

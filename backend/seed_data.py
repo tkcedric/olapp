@@ -1,7 +1,7 @@
 from app import create_app, db
 from app.models.user import User
 from app.models.content import Topic, Question, Answer, Course, Lesson
-
+from app.models import Lesson, Task
 app = create_app()
 
 with app.app_context():
@@ -82,3 +82,15 @@ with app.app_context():
     db.session.commit()
 
     print("Database seeded with sample users, topics, questions, and courses!")
+    topic1 = Topic(
+        name="Introduction to Programming",
+        description="Learn the basics of programming.",
+        summary="<p>This topic covers variables, data types, and control structures.</p>"
+    )
+    topic2 = Topic(
+        name="Advanced Algorithms",
+        description="Dive deeper into algorithms like sorting and searching.",
+        summary="<p>Learn advanced algorithms with examples.</p>"
+    )
+    db.session.add_all([topic1, topic2])
+    db.session.commit()

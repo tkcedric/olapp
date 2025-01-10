@@ -22,6 +22,8 @@ function Header() {
       </div>
       <div className="header-right">
         <Link to="/">Home</Link>
+        <Link to="/about-us">About Us</Link>
+        <Link to="/contact-us">Contact Us</Link>
         {isLoggedIn ? (
           <>
             <Link to="/progress">My Progress</Link>

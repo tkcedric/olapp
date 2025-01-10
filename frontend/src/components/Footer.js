@@ -8,7 +8,8 @@ function Footer() {
         Copyright © 2024 by <strong>tkc@Co.</strong> All rights reserved.
       </p>
       <p>
-        <a href="/terms">Terms of Service</a> | <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a> | <a href="/terms">Privacy Policy</a> {/* making privacy and terms to display the same page */}
+       {/*<a href="/terms">Terms of Service</a> | <a href="/privacy">Privacy Policy</a> */}
       </p>
     </footer>
   );
